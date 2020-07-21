@@ -32,7 +32,6 @@ class MainWindow:
         # MIDDLE FRAME LAYOUT------------------------------
         self.middle_frame.pack(fill=BOTH)
 
-
         # BINDINGS-----------------------------------------
         self.master.bind('<Control-n>', self.add_item)
         self.master.bind('<Control-s>', self.save)
@@ -52,7 +51,6 @@ class MainWindow:
         self.entry.pack(side=LEFT, expand=1, fill=X, padx=(0, 3.5))
         self.entry.focus()
         
-
         self.todo_list.append([self.item_frame, self.checkbuttonvar, self.entryvar])
 
     def save(self, *args):
@@ -73,7 +71,6 @@ class MainWindow:
         except FileNotFoundError:
             with open("data.pkl", "wb+") as file_to_save:
                 pickle.dump([], file_to_save)
-
 
     def delete_all_items(self):
         if messagebox.askyesno("Delete all items", "Are you sure you want to delete all the items?"):
@@ -100,7 +97,6 @@ class MainWindow:
         self.middle_frame.pack(fill=BOTH)
         self.add_item_button.focus()
 
-
     def on_closing(self):
         answer = messagebox.askyesnocancel("TO-DO List", "Do you want to save before closing?")
         if answer == True:
@@ -110,8 +106,6 @@ class MainWindow:
             root.destroy()
         if answer == None:
             pass
-
-        
 
 
 root = Tk()

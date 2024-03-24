@@ -1,6 +1,6 @@
 # TO-DO-list
 
-A to-do list application. GUI using Tkinter.
+A to-do list application which persists to-dos by serializing and storing it to the filesystem. GUI made using Tkinter.
 
 Run with:
 

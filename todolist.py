@@ -1,4 +1,4 @@
-from tkinter import (Tk, ttk, TOP, RIGHT, LEFT, BOTH, X, Y, StringVar, messagebox)
+from tkinter import Tk, ttk, TOP, RIGHT, LEFT, BOTH, X, Y, StringVar, messagebox
 import pickle
 
 
@@ -13,9 +13,17 @@ class MainWindow:
         self.todo_list = []
 
         # TOP FRAME WIDGETS--------------------------------
-        self.add_item_button = ttk.Button(self.top_frame, text="Add Item", command=self.add_item)
-        self.delete_all_items_button = ttk.Button(self.top_frame, text="Delete all items", command=self.delete_all_items)
-        self.delete_selected_items_button = ttk.Button(self.top_frame, text="Delete selected items", command=self.delete_selected_items)
+        self.add_item_button = ttk.Button(
+            self.top_frame, text="Add Item", command=self.add_item
+        )
+        self.delete_all_items_button = ttk.Button(
+            self.top_frame, text="Delete all items", command=self.delete_all_items
+        )
+        self.delete_selected_items_button = ttk.Button(
+            self.top_frame,
+            text="Delete selected items",
+            command=self.delete_selected_items,
+        )
         self.save_button = ttk.Button(self.top_frame, text="Save", command=self.save)
 
         # TOP FRAME LAYOUT---------------------------------
@@ -33,8 +41,8 @@ class MainWindow:
         self.middle_frame.pack(fill=BOTH)
 
         # BINDINGS-----------------------------------------
-        self.master.bind('<Control-n>', self.add_item)
-        self.master.bind('<Control-s>', self.save)
+        self.master.bind("<Control-n>", self.add_item)
+        self.master.bind("<Control-s>", self.save)
 
         self.load_items()
 
@@ -43,14 +51,16 @@ class MainWindow:
         self.item_frame.pack(fill=BOTH, pady=2.5, ipady=2)
 
         self.checkbuttonvar = StringVar()
-        ttk.Checkbutton(self.item_frame, variable=self.checkbuttonvar).pack(side=LEFT, padx=(3.5, 0))
+        ttk.Checkbutton(self.item_frame, variable=self.checkbuttonvar).pack(
+            side=LEFT, padx=(3.5, 0)
+        )
         self.checkbuttonvar.set(0)
 
         self.entryvar = StringVar()
         self.entry = ttk.Entry(self.item_frame, textvariable=self.entryvar)
         self.entry.pack(side=LEFT, expand=1, fill=X, padx=(0, 3.5))
         self.entry.focus()
-        
+
         self.todo_list.append([self.item_frame, self.checkbuttonvar, self.entryvar])
 
     def save(self, *args):
@@ -73,7 +83,9 @@ class MainWindow:
                 pickle.dump([], file_to_save)
 
     def delete_all_items(self):
-        if messagebox.askyesno("Delete all items", "Are you sure you want to delete all the items?"):
+        if messagebox.askyesno(
+            "Delete all items", "Are you sure you want to delete all the items?"
+        ):
             for item in self.todo_list:
                 item[0].destroy()
             self.todo_list = []
@@ -82,7 +94,10 @@ class MainWindow:
             self.add_item_button.focus()
 
     def delete_selected_items(self):
-        if messagebox.askyesno("Delete selected items", "Are you sure you want to delete the selected items?"):
+        if messagebox.askyesno(
+            "Delete selected items",
+            "Are you sure you want to delete the selected items?",
+        ):
             self.len = len(self.todo_list)
             for i in reversed(range(len(self.todo_list))):
                 if self.todo_list[i][1].get() == "1":
@@ -90,7 +105,7 @@ class MainWindow:
                     del self.todo_list[i]
             if self.len == 1:
                 self.destroy_and_add_middle_frame()
-    
+
     def destroy_and_add_middle_frame(self):
         self.middle_frame.destroy()
         self.middle_frame = ttk.Frame(self.master, borderwidth=1, relief="flat")
@@ -98,7 +113,9 @@ class MainWindow:
         self.add_item_button.focus()
 
     def on_closing(self):
-        answer = messagebox.askyesnocancel("TO-DO List", "Do you want to save before closing?")
+        answer = messagebox.askyesnocancel(
+            "TO-DO List", "Do you want to save before closing?"
+        )
         if answer == True:
             self.save()
             root.destroy()
